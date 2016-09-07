@@ -7,10 +7,12 @@ MAINTAINER Matt Snoby <matt.snoby@icloud.com>
 # Tiny Container that holds ffmpeg, ffprobe and can build / run golang programs.
 #
 #
-
+RUN apk --no-cache add ca-certificates curl bash xz-libs
 WORKDIR /tmp
-RUN wget -q http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz && \
-      tar xf ffmpeg-release-64bit-static.tar.xz     && \
-      cp -rf ffmpeg-3.1.1-64bit-static/* /usr/local/bin/
+RUN curl -L -O http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
+RUN tar -xf ffmpeg-release-64bit-static.tar.xz && \
+      cd ff* && mv ff* /usr/local/bin
+
+WORKDIR /
 
 ENTRYPOINT ["/bin/bash"]
